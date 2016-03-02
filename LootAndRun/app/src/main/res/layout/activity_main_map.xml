@@ -4,8 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MapActivity" >
+
     <fragment xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:map="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/map"
         android:name="com.google.android.gms.maps.SupportMapFragment"
@@ -19,7 +19,9 @@
         android:layout_height="94dp"
         android:text="Inventory"
         android:id="@+id/button2"
-        android:layout_gravity="left|bottom" />
+        android:layout_gravity="left|bottom"
+        android:onClick="openInventory"/>
+
 
     <Button
         style="?android:attr/buttonStyleSmall"
@@ -34,6 +36,7 @@
         android:layout_height="94dp"
         android:text="Options"
         android:id="@+id/button4"
-        android:layout_gravity="right|bottom" />
+        android:layout_gravity="right|bottom"
+        android:onClick="openOptions"/>
 
 </FrameLayout>
