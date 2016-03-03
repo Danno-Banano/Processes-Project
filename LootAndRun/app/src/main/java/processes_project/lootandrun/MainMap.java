@@ -56,7 +56,10 @@ public class MainMap extends FragmentActivity
 
         // Add a marker in Sydney and move the camera
         LatLng sydney = new LatLng(-34, 151);
-        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
+        mMap.addMarker(new MarkerOptions()
+                        .position(sydney)
+                .title("Zombie Marker")
+                .snippet("This zombie will kill you."));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
     }
 
@@ -114,11 +117,6 @@ public class MainMap extends FragmentActivity
     private void showMissingPermissionError() {
         PermissionUtils.PermissionDeniedDialog
                 .newInstance(true).show(getSupportFragmentManager(), "dialog");
-    }
-
-    public void openOptions(View view) {
-        Intent intent = new Intent(this, Options.class);
-        startActivity(intent);
     }
 
     public void openInventory(View view) {

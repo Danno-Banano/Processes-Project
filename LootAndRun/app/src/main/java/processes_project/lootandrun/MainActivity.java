@@ -18,4 +18,11 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, MainMap.class);
         startActivity(intent);
     }
+
+    public void openOptions(View view) {
+        Intent intent = new Intent(this, Options.class);
+        startActivity(intent);
+    }
+
+
 }

@@ -42,16 +42,17 @@
                 android:value="processes_project.lootandrun.MainActivity" />
         </activity>
         <activity
-            android:name=".Options"
-            android:label="@string/title_activity_options"
-            android:parentActivityName=".MainMap">
+            android:name=".Inventory"
+            android:label="@string/title_activity_inventory"
+            android:parentActivityName=".MainMap"
+            android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="processes_project.lootandrun.MainMap" />
         </activity>
         <activity
-            android:name=".Inventory"
-            android:label="@string/title_activity_inventory"
+            android:name=".Options"
+            android:label="@string/title_activity_options"
             android:parentActivityName=".MainMap"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
