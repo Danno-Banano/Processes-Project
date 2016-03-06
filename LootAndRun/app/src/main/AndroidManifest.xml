@@ -8,6 +8,7 @@
          location permissions for the 'MyLocation' functionality. 
     -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
     <application
         android:allowBackup="true"
@@ -55,6 +56,16 @@
             android:label="@string/title_activity_options"
             android:parentActivityName=".MainMap"
             android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="processes_project.lootandrun.MainMap" />
+        </activity>
+        <activity
+            android:name=".Combat"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/title_activity_combat"
+            android:parentActivityName=".MainMap"
+            android:theme="@style/FullscreenTheme">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="processes_project.lootandrun.MainMap" />

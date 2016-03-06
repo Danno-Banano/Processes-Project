@@ -149,11 +149,11 @@ public class Inventory extends AppCompatActivity {
         public CharSequence getPageTitle(int position) {
             switch (position) {
                 case 0:
-                    return "SECTION 1";
+                    return "Weapons";
                 case 1:
-                    return "SECTION 2";
+                    return "Armor";
                 case 2:
-                    return "SECTION 3";
+                    return "First Aid";
             }
             return null;
         }
