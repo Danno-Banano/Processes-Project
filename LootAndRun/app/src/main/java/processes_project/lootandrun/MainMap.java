@@ -93,8 +93,6 @@ public class MainMap extends FragmentActivity
     @Override
     public boolean onMyLocationButtonClick() {
         Toast.makeText(this, "THEY'RE RIGHT BEHIND YOU!", Toast.LENGTH_SHORT).show();
-        // Return false so that we don't consume the event and the default behavior still occurs
-        // (the camera animates to the user's current position).
         return false;
     }
 
