@@ -3,13 +3,18 @@ package processes_project.lootandrun;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
 import android.view.View;
+import android.view.ViewOutlineProvider;
+import android.widget.NumberPicker;
+import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ProgressBar;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -27,6 +32,12 @@ public class MainMap extends FragmentActivity
     private GoogleMap mMap;
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1;
     private boolean mPermissionDenied = false;
+    private ProgressBar progBar;
+    private NumberPicker healthNumber;
+
+    private int healthNum = 0;
+
+    private TextView txtV;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +47,16 @@ public class MainMap extends FragmentActivity
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+        txtV = (TextView)findViewById(R.id.textView);
+        txtV.setTextColor(Color.GREEN);
+        txtV.setBackgroundColor(Color.BLACK);
+        txtV.setText(Integer.toString(100));
+
+       // progBar = (ProgressBar)findViewById(R.id.progressBar);
+       // healthNum = progBar.getMax();
+       // progBar.setProgress(healthNum);
+
     }
 
 
@@ -61,6 +82,8 @@ public class MainMap extends FragmentActivity
                 .title("Zombie Marker")
                 .snippet("This zombie will kill you."));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+
+
     }
 
     private void enableMyLocation() {
@@ -124,4 +147,61 @@ public class MainMap extends FragmentActivity
         startActivity(intent);
     }
 
+
+    // Progress Bar Method
+    public void heal(View view)
+    {
+        String curHealth = txtV.getText().toString();
+
+        if( curHealth == "Dead" )
+            return;
+        
+        int curH = Integer.parseInt(curHealth);
+
+        if( curH < 100 )
+            curH++;
+
+        if( curH > 75 )
+        {
+            txtV.setTextColor(Color.GREEN);
+        }
+        else if( curH <= 75 && curH >= 25 )
+        {
+            txtV.setTextColor(Color.YELLOW);
+        }
+
+        txtV.setText(Integer.toString(curH));
+    }
+
+    // Progress Bar Method ---- will need to implement the case where health goes beyond 0
+    public void hurt(View view)
+    {
+        String curHealth = txtV.getText().toString();
+
+        if( curHealth == "Dead" )                           // this has to be here because app crashes if string "dead"
+            return;                                         // tries to be parsed to an integer below.
+
+        int curH = Integer.parseInt(curHealth);
+
+        curH--;
+
+        if( curH <= 0 )
+        {
+            txtV.setBackgroundColor(Color.RED);
+            txtV.setTextColor(Color.BLACK);
+            txtV.setText("Dead");
+        }
+        else
+        {
+            if( curH <= 75 && curH >= 25 )
+            {
+                txtV.setTextColor(Color.YELLOW);
+            }
+            else if( curH > 0 && curH < 25 )
+            {
+                txtV.setTextColor(Color.RED);
+            }
+            txtV.setText(Integer.toString(curH));
+        }
+    }
 }

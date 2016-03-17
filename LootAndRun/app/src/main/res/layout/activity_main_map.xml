@@ -13,20 +13,39 @@
         android:layout_height="match_parent"
         tools:context="processes_project.lootandrun.MainMap" />
 
-    <ProgressBar
-        android:layout_width="106dp"
-        android:layout_height="106dp"
-        android:id="@+id/progressBar"
-        android:layout_gravity="center_horizontal|bottom" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView"
+        android:width="15pt"
+        android:textStyle="bold"
+        android:textAlignment="viewEnd" />
 
     <Button
         style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="176dp"
+        android:layout_width="183dp"
+        android:layout_height="62dp"
         android:text="Inventory"
         android:id="@+id/button2"
-        android:layout_gravity="left|center_vertical"
+        android:layout_gravity="right|bottom"
         android:onClick="openInventory"/>
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Heal"
+        android:id="@+id/button3"
+        android:layout_gravity="end"
+        android:onClick="heal"
+        android:layout_marginTop="50dp"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Hurt"
+        android:id="@+id/button4"
+        android:onClick="hurt"
+        android:layout_gravity="right|top"
+        android:layout_marginTop="100dp"/>
 
 </FrameLayout>
