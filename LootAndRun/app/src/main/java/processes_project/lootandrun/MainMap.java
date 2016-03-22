@@ -177,7 +177,7 @@ public class MainMap extends FragmentActivity
                 .position(latLng)
                 .title("I am here!"));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
-        
+
 
     }
 
