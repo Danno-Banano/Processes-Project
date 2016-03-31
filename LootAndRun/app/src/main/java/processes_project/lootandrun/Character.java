@@ -2,7 +2,7 @@ package processes_project.lootandrun;
 
 import android.location.Location;
 
-import java.util.HashMap;
+import java.util.ArrayList;
 
 /**
  * Created by Danny on 3/30/2016.
@@ -11,7 +11,7 @@ public class Character {
     private int health;
     private String charName;
     private int attackDamage;
-    private HashMap Inventory;
+    private ArrayList<Item> Inventory;
 
     public int getHealth() {
         return health;
@@ -37,11 +37,11 @@ public class Character {
         this.attackDamage = attackDamage;
     }
 
-    public HashMap getInventory() {
+    public ArrayList<Item> getInventory() {
         return Inventory;
     }
 
-    public void setInventory(HashMap inventory) {
+    public void setInventory(ArrayList<Item> inventory) {
         Inventory = inventory;
     }
 
@@ -55,11 +55,11 @@ public class Character {
 
     private Location charLocation;
 
-    public Character(int health, String charName, Location charLocation, int attackDamage, HashMap inventory) {
+    public Character(int health, String charName, Location charLocation, int attackDamage, ArrayList<Item> inventory) {
         this.health = health;
         this.charName = charName;
         this.charLocation = charLocation;
         this.attackDamage = attackDamage;
-        Inventory = new HashMap();
+        Inventory = new ArrayList<Item>();
     }
 }
