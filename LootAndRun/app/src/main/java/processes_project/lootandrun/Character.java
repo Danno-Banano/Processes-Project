@@ -63,3 +63,4 @@ public class Character {
         Inventory = new ArrayList<Item>();
     }
 }
+

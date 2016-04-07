@@ -5,7 +5,7 @@ package processes_project.lootandrun;
  */
 public class Item {
     private String name;
-    private int count;
+    private int power;
     private String itemType;
 
     public String getName() {
@@ -16,12 +16,12 @@ public class Item {
         this.name = name;
     }
 
-    public int getCount() {
-        return count;
+    public int getPower() {
+        return power;
     }
 
-    public void setCount(int count) {
-        this.count = count;
+    public void setPower(int power) {
+        this.power = power;
     }
 
     public String getItemType() {
