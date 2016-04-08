@@ -43,6 +43,7 @@ public class MainMap extends FragmentActivity
     private Marker mCurrentLocation;
     public static final String TAG = MainMap.class.getSimpleName();
     private final static int CONNECTION_FAILURE_RESOLUTION_REQUEST = 9000;
+    private Character mainPlayer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +66,8 @@ public class MainMap extends FragmentActivity
                 .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
                 .setInterval(10 * 1000)        // 10 seconds, in milliseconds
                 .setFastestInterval(1 * 1000); // 1 second, in milliseconds
+        if(mainPlayer == null)
+            mainPlayer = new Character();
     }
 
     @Override
@@ -117,6 +120,10 @@ public class MainMap extends FragmentActivity
         startActivity(intent);
     }
 
+    public Character getMainPlayer() {
+        return mainPlayer;
+    }
+
     //--------------Location Stuff------------
     @Override
     public void onConnected(Bundle bundle) {
@@ -159,9 +166,7 @@ public class MainMap extends FragmentActivity
     }
 
     @Override
-    public void onLocationChanged(Location location) {
-        handleNewLocation(location);
-    }
+    public void onLocationChanged(Location location) {handleNewLocation(location);}
 
     private void handleNewLocation(Location location) {
         Log.d(TAG, location.toString());
@@ -177,8 +182,7 @@ public class MainMap extends FragmentActivity
                 .position(latLng)
                 .title("I am here!"));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
-
-
+        mainPlayer.setCharLocation(location);
     }
 
     //------------Permissions stuff------------

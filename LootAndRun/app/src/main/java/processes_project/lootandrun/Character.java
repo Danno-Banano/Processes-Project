@@ -62,5 +62,11 @@ public class Character {
         this.attackDamage = attackDamage;
         Inventory = new ArrayList<Item>();
     }
-}
 
+    public Character() {
+        this.health = 100;
+        this.charName = "Main Player";
+        this.attackDamage = 50;
+        Inventory = new ArrayList<Item>();
+    };
+}
