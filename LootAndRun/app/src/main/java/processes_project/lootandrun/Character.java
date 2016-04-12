@@ -12,6 +12,7 @@ public class Character {
     private String charName;
     private int attackDamage;
     private ArrayList<Item> Inventory;
+    private Location charLocation;
 
     public int getHealth() {
         return health;
@@ -53,7 +54,7 @@ public class Character {
         this.charLocation = charLocation;
     }
 
-    private Location charLocation;
+
 
     public Character(int health, String charName, Location charLocation, int attackDamage, ArrayList<Item> inventory) {
         this.health = health;
