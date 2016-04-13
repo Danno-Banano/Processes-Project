@@ -1,5 +1,6 @@
 package processes_project.lootandrun;
 
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -15,7 +16,15 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
+
+import com.google.android.gms.location.places.Place;
+
+import org.mortbay.jetty.servlet.Context;
+
+import java.util.ArrayList;
 
 public class Inventory extends AppCompatActivity {
 
@@ -27,17 +36,25 @@ public class Inventory extends AppCompatActivity {
      * may be best to switch to a
      * {@link android.support.v4.app.FragmentStatePagerAdapter}.
      */
-    private SectionsPagerAdapter mSectionsPagerAdapter;
+    public SectionsPagerAdapter mSectionsPagerAdapter;
 
     /**
      * The {@link ViewPager} that will host the section contents.
      */
-    private ViewPager mViewPager;
+    private static ViewPager mViewPager;
+
+    private static ListView weapons;
+    private ListView armor;
+    private ListView firstAid;
+
+    private static int tabNum;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inventory);
+
+        tabNum = 0;
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -52,6 +69,7 @@ public class Inventory extends AppCompatActivity {
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
+        //tabLayout.addView((ListView)findViewById(R.id.view1), 1);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -90,37 +108,83 @@ public class Inventory extends AppCompatActivity {
     /**
      * A placeholder fragment containing a simple view.
      */
-    public static class PlaceholderFragment extends Fragment {
-        /**
-         * The fragment argument representing the section number for this
-         * fragment.
-         */
-        private static final String ARG_SECTION_NUMBER = "section_number";
-
-        public PlaceholderFragment() {
-        }
-
-        /**
-         * Returns a new instance of this fragment for the given section
-         * number.
-         */
-        public static PlaceholderFragment newInstance(int sectionNumber) {
-            PlaceholderFragment fragment = new PlaceholderFragment();
-            Bundle args = new Bundle();
-            args.putInt(ARG_SECTION_NUMBER, sectionNumber);
-            fragment.setArguments(args);
-            return fragment;
-        }
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_inventory, container, false);
-            TextView textView = (TextView) rootView.findViewById(R.id.section_label);
-            textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));
-            return rootView;
-        }
-    }
+//    public static class PlaceholderFragment extends Fragment {
+//        /**
+//         * The fragment argument representing the section number for this
+//         * fragment.
+//         */
+//        private static final String ARG_SECTION_NUMBER = "section_number";
+//
+//        //private int tabNum = 0;
+//
+//        private static int sNum;
+//
+//        public PlaceholderFragment() {
+//        }
+//
+//        /**
+//         * Returns a new instance of this fragment for the given section
+//         * number.
+//         */
+//        public static PlaceholderFragment newInstance(int sectionNumber) {
+//            sNum = sectionNumber-1;
+//            PlaceholderFragment fragment = new PlaceholderFragment();
+//            Bundle args = new Bundle();
+//            args.putInt(ARG_SECTION_NUMBER, sectionNumber);
+//            fragment.setArguments(args);
+//            return fragment;
+//        }
+//
+//        @Override
+//        public View onCreateView(LayoutInflater inflater, ViewGroup container,
+//                                 Bundle savedInstanceState) {
+//            View rootView;
+//
+//            if( sNum == 0 )
+//            {
+//                rootView = inflater.inflate(R.layout.fragment_inventory, container, false);
+//
+//                String[] lootW = {"Pistol", "Knife", "Bow", "Machine Gun", "Chain Saw"};                                                                    // Implemented by daniel healy
+//                ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, lootW);
+//                ListView listView = (ListView) rootView.findViewById(R.id.section_list_label);
+//                listView.setAdapter(adapter);
+//
+//                tabNum++;
+//
+//                return rootView;
+//            }
+//            else if( sNum == 1 )
+//            {
+//                rootView = inflater.inflate(R.layout.fragment_inventory, container, false);
+//
+//                //ArrayList<Item> playerInv;
+//                //playerInv = MainMap.getPlayer().getInventory();
+//                String[] lootA = {"Bulletproof Vest", "Knee Pads", "Elbow Pads", "Helmet", "Ball Cap"};
+//                ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1, lootA);
+//                ListView listView = (ListView) rootView.findViewById(R.id.section_list_label);
+//                listView.setAdapter(adapter);
+//
+//                tabNum++;
+//
+//                return rootView;
+//            }
+//            else
+//                rootView = inflater.inflate(R.layout.fragment_inventory, container, false);
+//
+//
+////            TextView textView = (TextView) rootView.findViewById(R.id.section_label);
+////            textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));
+//
+//
+//
+//
+//
+//        //    listView.setEnabled(true);
+//
+//
+//            return rootView;
+//        }
+//    }
 
     /**
      * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
@@ -136,7 +200,23 @@ public class Inventory extends AppCompatActivity {
         public Fragment getItem(int position) {
             // getItem is called to instantiate the fragment for the given page.
             // Return a PlaceholderFragment (defined as a static inner class below).
-            return PlaceholderFragment.newInstance(position + 1);
+            //return PlaceholderFragment.newInstance(position + 1);
+
+            switch( position )
+            {
+                case 0:
+                    String[] lootW = {"Pistol", "Knife", "Bow", "Machine Gun", "Chain Saw"};
+                    Bundle args = new Bundle();
+                    return PlaceholderFragment.newInstance(position+1, lootW);
+                case 1:
+                    String[] lootA = {"Bulletproof Vest", "Knee Pads", "Elbow Pads", "Helmet", "Ball Cap"};
+                    return PlaceholderFragment.newInstance(position+1, lootA);
+                case 2:
+                    String[] lootH = {"Water", "Bandaid", "Beans", "Morphin"};
+                    return PlaceholderFragment.newInstance(position+1, lootH);
+                default:
+                    return null;
+            }
         }
 
         @Override
