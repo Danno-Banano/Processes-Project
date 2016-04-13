@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import java.util.ArrayList;
 import android.widget.ListView;
 
 /**
@@ -23,6 +24,7 @@ public class PlaceholderFragment extends android.support.v4.app.Fragment {
 
     private static int sNum;
     private String[] loot;
+    private ArrayList<Item> lootC;
 
     public PlaceholderFragment() {
        // this.loot = loot;
@@ -32,10 +34,13 @@ public class PlaceholderFragment extends android.support.v4.app.Fragment {
      * Returns a new instance of this fragment for the given section
      * number.
      */
-    public static PlaceholderFragment newInstance(int sectionNumber, String[] loot) {
+    public static PlaceholderFragment newInstance(int sectionNumber, String[] loot, ArrayList<Item> lootC, int choice) {
         sNum = sectionNumber-1;
         PlaceholderFragment fragment = new PlaceholderFragment();
-        fragment.setArguments(loot);
+        if(choice == 1)
+            fragment.setArguments(loot);
+        else
+            fragment.setArguments(lootC);
         Bundle args = new Bundle();
         args.putInt(ARG_SECTION_NUMBER, sectionNumber);
         fragment.setArguments(args);
@@ -47,6 +52,8 @@ public class PlaceholderFragment extends android.support.v4.app.Fragment {
         this.loot = loot;
     }
 
+    public void setArguments( ArrayList<Item> lootC ) { this.lootC = lootC; }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -57,9 +64,8 @@ public class PlaceholderFragment extends android.support.v4.app.Fragment {
             rootView = inflater.inflate(R.layout.fragment_inventory, container, false);
 
             //String[] lootW = {"Pistol", "Knife", "Bow", "Machine Gun", "Chain Saw"};                                                                    // Implemented by daniel healy
-            ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1, loot);
+            ArrayAdapter<Item> adapter = new ArrayAdapter<Item>(getContext(), android.R.layout.simple_list_item_1, lootC);
             ListView listView = (ListView) rootView.findViewById(R.id.section_list_label);
-
             listView.setAdapter(adapter);
 
 //            listView.getOnItemClickListener(new AdapterView.OnItemClickListener() {

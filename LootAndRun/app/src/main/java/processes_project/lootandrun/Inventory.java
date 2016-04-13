@@ -202,18 +202,91 @@ public class Inventory extends AppCompatActivity {
             // Return a PlaceholderFragment (defined as a static inner class below).
             //return PlaceholderFragment.newInstance(position + 1);
 
+            ArrayList<Item> loot = MainMap.getMainPlayer().getInventory();
+
             switch( position )
             {
                 case 0:
                     String[] lootW = {"Pistol", "Knife", "Bow", "Machine Gun", "Chain Saw"};
-                    Bundle args = new Bundle();
-                    return PlaceholderFragment.newInstance(position+1, lootW);
+
+//                    Item x = new Item();
+//                    x.setName("Pistol");
+//                    Item y = new Item();
+//                    x.setName("Knife");
+//                    ArrayList<Item> testW = new ArrayList();
+//                    testW.add(x);
+//                    testW.add(y);
+//                    MainMap.getMainPlayer().setInventory(testW);
+//                    //ArrayList<Item> lootWc = MainMap.getMainPlayer().getInventory();
+
+
+                    ArrayList<Item> lootWc = new ArrayList<Item>();
+                    for( int i = 0; i < loot.size(); i++ )
+                    {
+                        if( loot.get(i).getItemType() == "Weapon" )
+                        {
+                            lootWc.add(loot.get(i));
+                        }
+                    }
+
+
+
+                    return PlaceholderFragment.newInstance(position+1, lootW, lootWc, 2);
+
                 case 1:
                     String[] lootA = {"Bulletproof Vest", "Knee Pads", "Elbow Pads", "Helmet", "Ball Cap"};
-                    return PlaceholderFragment.newInstance(position+1, lootA);
+
+//                    Item xx = new Item();
+//                    xx.setName("Bulletproof Vest");
+//                    Item yy = new Item();
+//                    yy.setName("Knew Pads");
+//                    ArrayList<Item> testA = new ArrayList();
+//                    testA.add(xx);
+//                    testA.add(yy);
+//                    MainMap.getMainPlayer().setInventory(testA);
+//                    ArrayList<Item> lootAc = MainMap.getMainPlayer().getInventory();
+
+
+
+                    ArrayList<Item> lootAc = new ArrayList<Item>();
+                    for( int i = 0; i < loot.size(); i++ )
+                    {
+                        if( loot.get(i).getItemType() == "Armor" )
+                        {
+                            lootAc.add(loot.get(i));
+                        }
+                    }
+
+
+
+                    return PlaceholderFragment.newInstance(position+1, lootA, lootAc, 2);
                 case 2:
                     String[] lootH = {"Water", "Bandaid", "Beans", "Morphin"};
-                    return PlaceholderFragment.newInstance(position+1, lootH);
+
+//                    Item xxx = new Item();
+//                    xxx.setName("Water");
+//                    Item yyy = new Item();
+//                    yyy.setName("Bandaid");
+//                    ArrayList<Item> testH = new ArrayList();
+//                    testH.add(xxx);
+//                    testH.add(yyy);
+//                    MainMap.getMainPlayer().setInventory(testH);
+//                    ArrayList<Item> lootHc = MainMap.getMainPlayer().getInventory();
+
+
+
+                    ArrayList<Item> lootHc = new ArrayList<Item>();
+                    for( int i = 0; i < loot.size(); i++ )
+                    {
+                        if( loot.get(i).getItemType() == "First Aid" )
+                        {
+                            lootHc.add(loot.get(i));
+                        }
+                    }
+
+
+
+                    return PlaceholderFragment.newInstance(position+1, lootH, lootHc, 2);
                 default:
                     return null;
             }

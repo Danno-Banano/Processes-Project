@@ -43,7 +43,7 @@ public class MainMap extends FragmentActivity
     private Marker mCurrentLocation;
     public static final String TAG = MainMap.class.getSimpleName();
     private final static int CONNECTION_FAILURE_RESOLUTION_REQUEST = 9000;
-    private Character mainPlayer;
+    private static Character mainPlayer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,6 +68,26 @@ public class MainMap extends FragmentActivity
                 .setFastestInterval(1 * 1000); // 1 second, in milliseconds
         if(mainPlayer == null)
             mainPlayer = new Character();
+
+
+        ////////////                                /// Temporarily adding items to the characters Inventory
+        mainPlayer.addItemToInventory(new Item("Knife", 1, "Weapon"));
+        mainPlayer.addItemToInventory(new Item("Water", 2, "First Aid"));
+        mainPlayer.addItemToInventory(new Item("Bulletproof Vest", 4, "Armor"));
+        mainPlayer.addItemToInventory(new Item("Pistol", 3, "Weapon"));
+        mainPlayer.addItemToInventory(new Item("Bandaid", 3, "First Aid"));
+        mainPlayer.addItemToInventory(new Item("Beans", 2, "First Aid"));
+        mainPlayer.addItemToInventory(new Item("Knee Pads", 2, "Armor"));
+        mainPlayer.addItemToInventory(new Item("Bow", 2, "Weapon"));
+        mainPlayer.addItemToInventory(new Item("Elbow Pads", 1, "Armor"));
+        mainPlayer.addItemToInventory(new Item("Machine Gun", 5, "Weapon"));
+        mainPlayer.addItemToInventory(new Item("Chain Saw", 4, "Weapon"));
+        mainPlayer.addItemToInventory(new Item("Helmet", 4, "Armor"));
+        mainPlayer.addItemToInventory(new Item("Morphin", 4, "First Aid"));
+        mainPlayer.addItemToInventory(new Item("Ball Cap", 1, "Armor"));
+
+
+
     }
 
     @Override
@@ -120,7 +140,7 @@ public class MainMap extends FragmentActivity
         startActivity(intent);
     }
 
-    public Character getMainPlayer() {
+    public static Character getMainPlayer() {
         return mainPlayer;
     }
 

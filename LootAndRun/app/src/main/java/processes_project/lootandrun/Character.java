@@ -46,6 +46,10 @@ public class Character {
         Inventory = inventory;
     }
 
+    public void addItemToInventory( Item item ){ Inventory.add(item);}                          // so I can add an individual item to the inventory - Daniel Healy
+
+    public void removeItemFromInventory( Item item ){ Inventory.remove(item);}                  // so I can remove an individual item from the inventory (IS THAT THE RIGHT METHOD TO USE????) - Daniel Healy
+
     public Location getCharLocation() {
         return charLocation;
     }
