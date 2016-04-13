@@ -1,5 +1,5 @@
 package processes_project.lootandrun;
-
+//test
 import android.location.Location;
 
 import java.util.ArrayList;
