@@ -66,8 +66,11 @@ public class MainMap extends FragmentActivity
                 .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
                 .setInterval(10 * 1000)        // 10 seconds, in milliseconds
                 .setFastestInterval(1 * 1000); // 1 second, in milliseconds
-        if(mainPlayer == null)
+
+        //if there is no player, or player is dead, make a new one
+        if(mainPlayer == null || mainPlayer.getHealth()<=0)
             mainPlayer = new Character();
+
 
 
         ////////////                                /// Temporarily adding items to the characters Inventory
@@ -85,6 +88,8 @@ public class MainMap extends FragmentActivity
         mainPlayer.addItemToInventory(new Item("Helmet", 4, "Armor"));
         mainPlayer.addItemToInventory(new Item("Morphin", 4, "First Aid"));
         mainPlayer.addItemToInventory(new Item("Ball Cap", 1, "Armor"));
+
+
 
 
 
@@ -142,6 +147,15 @@ public class MainMap extends FragmentActivity
 
     public static Character getMainPlayer() {
         return mainPlayer;
+    }
+
+    //combat starter
+    //We need to pass a reference to the monster we're fighting here
+    public void fightMonster(View view)
+    {
+        Intent intent = new Intent(this,Combat.class);
+        startActivity(intent);
+
     }
 
     //--------------Location Stuff------------

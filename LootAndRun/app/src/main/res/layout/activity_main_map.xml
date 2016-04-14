@@ -28,5 +28,13 @@
         android:layout_gravity="left|center_vertical"
         android:onClick="openInventory"/>
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="FightExample"
+        android:id="@+id/button3"
+        android:layout_gravity="right|center_vertical"
+        android:onClick="fightMonster" />
+
 
 </FrameLayout>

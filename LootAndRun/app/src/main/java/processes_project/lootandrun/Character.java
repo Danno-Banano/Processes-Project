@@ -13,6 +13,7 @@ public class Character {
     private int attackDamage;
     private ArrayList<Item> Inventory;
     private Location charLocation;
+    private Boolean isDead;
 
     public int getHealth() {
         return health;
@@ -58,6 +59,15 @@ public class Character {
         this.charLocation = charLocation;
     }
 
+    public void setDead (Boolean isdead)
+    {
+        this.isDead = isdead;
+    }
+
+    public Boolean isDead()
+    {
+        return isDead;
+    }
 
 
     public Character(int health, String charName, Location charLocation, int attackDamage, ArrayList<Item> inventory) {
@@ -66,12 +76,14 @@ public class Character {
         this.charLocation = charLocation;
         this.attackDamage = attackDamage;
         Inventory = new ArrayList<Item>();
+        this.setDead(false);
     }
 
     public Character() {
         this.health = 100;
-        this.charName = "Main Player";
+        this.charName = "John Doe";
         this.attackDamage = 50;
         Inventory = new ArrayList<Item>();
+        this.setDead(false);
     };
 }
