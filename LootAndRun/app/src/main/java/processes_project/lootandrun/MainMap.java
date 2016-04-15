@@ -44,6 +44,7 @@ public class MainMap extends FragmentActivity
     public static final String TAG = MainMap.class.getSimpleName();
     private final static int CONNECTION_FAILURE_RESOLUTION_REQUEST = 9000;
     private static Character mainPlayer;
+    private Manager manager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,7 +72,12 @@ public class MainMap extends FragmentActivity
         if(mainPlayer == null || mainPlayer.getHealth()<=0)
             mainPlayer = new Character();
 
-
+        /*********** Temporarily Added for testing ************/
+        Location charLoc = new Location("dummy");
+        charLoc.setLatitude(28.6024);
+        charLoc.setLongitude(-81.2001);
+        mainPlayer.setCharLocation(charLoc);
+        /******************************************************/
 
         ////////////                                /// Temporarily adding items to the characters Inventory
         /**mainPlayer.addItemToInventory(new Item("Knife", 1, "Weapon"));
@@ -89,8 +95,10 @@ public class MainMap extends FragmentActivity
         mainPlayer.addItemToInventory(new Item("Morphine", 4, "First Aid"));
         mainPlayer.addItemToInventory(new Item("Ball Cap", 1, "Armor"));
 
-        **/
+         **/
 
+        // Create a new manager
+        manager = new Manager(this, 5, 5, 0.005, 3000);
     }
 
     @Override
@@ -98,6 +106,7 @@ public class MainMap extends FragmentActivity
         mMap = googleMap;
         mMap.setOnMyLocationButtonClickListener(this);
         enableMyLocation();
+        manager.startManager();
     }
 
     @Override
@@ -258,5 +267,8 @@ public class MainMap extends FragmentActivity
         }
     }
 
+    public GoogleMap getGoogleMap() {
+        return mMap;
+    }
 
 }

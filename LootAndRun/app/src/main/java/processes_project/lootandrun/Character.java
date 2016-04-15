@@ -74,6 +74,9 @@ public class Character {
         return isDead;
     }
 
+    public String toString() {
+        return charName + " (" + health + ")";
+    }
 
     public Character(int health, String charName, Location charLocation, int attackDamage, ArrayList<Item> inventory) {
         this.health = health;
