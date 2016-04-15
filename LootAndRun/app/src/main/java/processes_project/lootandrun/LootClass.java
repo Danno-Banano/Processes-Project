@@ -36,6 +36,10 @@ public class LootClass {
             getMainPlayer().addItemToInventory(newItem);
         }
     }
+
+    public String toString() {
+        return "Cache";
+    }
 }
 
 

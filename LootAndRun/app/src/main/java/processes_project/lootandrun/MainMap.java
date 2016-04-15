@@ -19,6 +19,7 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -107,6 +108,11 @@ public class MainMap extends FragmentActivity
         mMap.setOnMyLocationButtonClickListener(this);
         enableMyLocation();
         manager.startManager();
+
+        /******* Added temporarily for testing ********/
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(28.555, -81.2001)));
+        mMap.animateCamera(CameraUpdateFactory.zoomTo(15));
+        /**********************************************/
     }
 
     @Override
