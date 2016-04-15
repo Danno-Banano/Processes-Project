@@ -5,8 +5,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import java.util.ArrayList;
 import android.widget.ListView;
+
+import java.util.ArrayList;
 
 /**
  * Created by danielhealy on 4/12/16.
@@ -111,5 +112,6 @@ public class PlaceholderFragment extends android.support.v4.app.Fragment {
 //
 //        return rootView;
     }
+
 }
 
