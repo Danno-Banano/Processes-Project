@@ -74,7 +74,7 @@ public class MainMap extends FragmentActivity
 
 
         ////////////                                /// Temporarily adding items to the characters Inventory
-        mainPlayer.addItemToInventory(new Item("Knife", 1, "Weapon"));
+        /**mainPlayer.addItemToInventory(new Item("Knife", 1, "Weapon"));
         mainPlayer.addItemToInventory(new Item("Water", 2, "First Aid"));
         mainPlayer.addItemToInventory(new Item("Bulletproof Vest", 4, "Armor"));
         mainPlayer.addItemToInventory(new Item("Pistol", 3, "Weapon"));
@@ -89,9 +89,7 @@ public class MainMap extends FragmentActivity
         mainPlayer.addItemToInventory(new Item("Morphin", 4, "First Aid"));
         mainPlayer.addItemToInventory(new Item("Ball Cap", 1, "Armor"));
 
-
-
-
+        **/
 
     }
 

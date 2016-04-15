@@ -1,5 +1,8 @@
 package processes_project.lootandrun;
 import java.util.*;
+
+import static processes_project.lootandrun.MainMap.*;
+
 /**
  * Created by danny on 4/7/2016.
  */
@@ -21,16 +24,16 @@ public class LootClass {
 
     // Loots from a cache depending on items already contained within the player inventory
 
-    public void cacheLoot() {
+    protected void cacheLoot() {
         Item newItem = randomLooter();
         boolean check = false;
-        for (Item temp : MainMap.getMainPlayer().getInventory()) {
+        for (Item temp : getMainPlayer().getInventory()) {
             if (temp == newItem) {
                 check = true;
             }
         }
         if (check == false) {
-            MainMap.getMainPlayer().addItemToInventory(newItem);
+            getMainPlayer().addItemToInventory(newItem);
         }
     }
 }

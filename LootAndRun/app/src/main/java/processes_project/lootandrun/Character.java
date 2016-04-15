@@ -15,6 +15,11 @@ public class Character {
     private Location charLocation;
     private Boolean isDead;
 
+    public void doTheShit(){
+        LootClass looter = new LootClass();
+        looter.cacheLoot();
+    }
+
     public int getHealth() {
         return health;
     }
@@ -85,5 +90,5 @@ public class Character {
         this.attackDamage = 50;
         Inventory = new ArrayList<Item>();
         this.setDead(false);
-    };
+    }
 }
