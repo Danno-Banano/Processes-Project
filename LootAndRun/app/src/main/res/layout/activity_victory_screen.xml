@@ -15,8 +15,9 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="You killed the zombie!"
         android:id="@+id/victoryText"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_above="@+id/lootText"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="109dp" />
 
     <Button
         android:layout_width="wrap_content"
@@ -26,4 +27,15 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:onClick="returnToMap" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Loot Text"
+        android:id="@+id/lootText"
+        android:enabled="true"
+        android:editable="true"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:textSize="20dp" />
 </RelativeLayout>
