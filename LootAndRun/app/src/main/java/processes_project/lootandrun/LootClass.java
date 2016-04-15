@@ -28,7 +28,7 @@ public class LootClass {
         Item newItem = randomLooter();
         boolean check = false;
         for (Item temp : getMainPlayer().getInventory()) {
-            if (temp == newItem) {
+            if (temp == newItem && newItem.getItemType() != "First Aid") {
                 check = true;
             }
         }

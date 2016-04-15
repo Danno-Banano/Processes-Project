@@ -15,7 +15,7 @@ public class Character {
     private Location charLocation;
     private Boolean isDead;
 
-    public void doTheShit(){
+    public void doLoot(){
         LootClass looter = new LootClass();
         looter.cacheLoot();
     }

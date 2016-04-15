@@ -59,7 +59,7 @@ public class Combat extends AppCompatActivity {
             Intent intent = new Intent(this, VictoryScreen.class);
             startActivity(intent);
             zombie.setDead(Boolean.TRUE);
-            MainMap.getMainPlayer().doTheShit();
+            MainMap.getMainPlayer().doLoot();
 
         }
 
