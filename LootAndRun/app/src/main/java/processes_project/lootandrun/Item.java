@@ -12,7 +12,7 @@ public class Item {
     {                                                                   // begin with. - Daniel Healy
         this.name = name;
         this.power = power;
-        this.itemType = itemType;
+        this.itemType = itemType; //Make sure equals "Weapon", "Armor", "First Aid"
     }
 
     @Override

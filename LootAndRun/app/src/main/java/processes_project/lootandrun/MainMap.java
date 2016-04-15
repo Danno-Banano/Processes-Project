@@ -86,7 +86,7 @@ public class MainMap extends FragmentActivity
         mainPlayer.addItemToInventory(new Item("Machine Gun", 5, "Weapon"));
         mainPlayer.addItemToInventory(new Item("Chain Saw", 4, "Weapon"));
         mainPlayer.addItemToInventory(new Item("Helmet", 4, "Armor"));
-        mainPlayer.addItemToInventory(new Item("Morphin", 4, "First Aid"));
+        mainPlayer.addItemToInventory(new Item("Morphine", 4, "First Aid"));
         mainPlayer.addItemToInventory(new Item("Ball Cap", 1, "Armor"));
 
         **/

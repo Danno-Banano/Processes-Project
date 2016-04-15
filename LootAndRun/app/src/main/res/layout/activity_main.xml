@@ -39,4 +39,12 @@
         android:layout_centerHorizontal="true"
         android:onClick="openOptions"/>
 
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/imageView"
+        android:src="@drawable/mainscreen"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentTop="true" />
+
 </RelativeLayout>
