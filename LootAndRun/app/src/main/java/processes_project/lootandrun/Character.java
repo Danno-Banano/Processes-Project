@@ -38,7 +38,25 @@ public class Character implements Serializable {
     }
 
     public int getAttackDamage() {
-        return attackDamage;
+
+        int damageFromItems = 0;
+
+        if(!Inventory.isEmpty())
+        {
+            for(int i=0;i<Inventory.size();i++)
+            {
+               damageFromItems+= Inventory.get(i).getPower();
+
+            }
+
+        }
+
+
+
+
+
+
+        return attackDamage + damageFromItems;
     }
 
     public void setAttackDamage(int attackDamage) {
