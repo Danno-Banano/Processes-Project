@@ -4,8 +4,12 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.provider.ContactsContract;
 
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -18,9 +22,9 @@ import java.util.Random;
 
 /**
  * Created by trevor on 4/12/16.
- */ public class Manager { private MainMap map; public HashMap<Integer, MapObject> mapObjects; private int numMonsters; private int numCaches; private int maxNumMonsters; private int maxNumCaches; private double loadRadius; private long refreshTimer; private DatabaseHelper dbHelper; private String[] dbCols;
+ */ public class Manager { private MainMap map; public HashMap<Integer, MapObject> mapObjects; private int numMonsters; private int numCaches; private int maxNumMonsters; private int maxNumCaches; private double loadRadius; private double tapRadius; private long refreshTimer; private DatabaseHelper dbHelper; private String[] dbCols;
 
-    public Manager(Context context, MainMap map, final int maxNumMonsters, int maxNumCaches, double loadRadius, int refreshTimer) {
+    public Manager(Context context, MainMap map, final int maxNumMonsters, int maxNumCaches, double loadRadius, double tapRadius, int refreshTimer) {
         this.map = map;
         mapObjects = new HashMap<>();
         numMonsters = 0;
@@ -28,6 +32,7 @@ import java.util.Random;
         this.maxNumMonsters = maxNumMonsters;
         this.maxNumCaches = maxNumCaches;
         this.loadRadius = loadRadius;
+        this.tapRadius = tapRadius;
         this.refreshTimer = refreshTimer;
         this.dbHelper = new DatabaseHelper(context);
         dbCols = new String[]{"ID", "TYPE", "NAME", "HEALTH", "MAX_HEALTH", "INVENTORY", "LATITUDE",
@@ -49,7 +54,7 @@ import java.util.Random;
             placeNewMonster(
                     new Character(cursor.getInt(3), cursor.getString(2), null, cursor.getInt(8), monsterInventory)
                     , cursor.getDouble(6), cursor.getDouble(7));
-            dbHelper.getWritableDatabase().delete(tableName, "ID=?", new String[]{""+cursor.getInt(0)});
+            dbHelper.getWritableDatabase().delete(tableName, "ID=?", new String[]{"" + cursor.getInt(0)});
             cursor.moveToNext();
         }
     }
@@ -84,25 +89,48 @@ import java.util.Random;
         fetchMonstersFromDatabase();
         fetchCachesFromDatabase();
 
+        // Draw a blue circle around the main player
+        new Thread() {
+            public void run() {
+                while (true) {
+                    try {
+                        sleep(100);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    map.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            map.getGoogleMap().addCircle(new CircleOptions()
+                                .center(new LatLng(MainMap.getMainPlayer().getCharLocation().getLatitude(), MainMap.getMainPlayer().getCharLocation().getLongitude()))
+                                .radius(tapRadius)
+                                .strokeColor(Color.BLUE)
+                                .fillColor(Color.argb(50, 50, 50, 50)));
+                            }
+                    });
+                }
+            }
+        }.start();
+
         Thread t = new Thread() {
             public void run() {
                 while (true) {
                     try {
                         sleep(refreshTimer);
-                        map.runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                if (numMonsters < maxNumMonsters) {
-                                    placeNewMonster();
-                                }
-                                if (numCaches < maxNumCaches) {
-                                    placeNewCache();
-                                }
-                            }
-                        });
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
+                    map.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (numMonsters < maxNumMonsters) {
+                                placeNewMonster();
+                            }
+                            if (numCaches < maxNumCaches) {
+                                placeNewCache();
+                            }
+                        }
+                    });
                 }
             }
         };
@@ -110,7 +138,7 @@ import java.util.Random;
         t.start();
     }
 
-    private <E> Marker placeObjectOnMap(E object) {
+    private <E> Marker placeObjectOnMap(E object, String iconFileName) {
         if (MainMap.getMainPlayer().getCharLocation() == null) {
             return null;
         }
@@ -121,22 +149,24 @@ import java.util.Random;
 
         Marker objMarker = map.getGoogleMap().addMarker(new MarkerOptions()
                 .position(objLatLng)
-                .title(object.toString()));
+                .title(object.toString())
+                .icon(BitmapDescriptorFactory.fromAsset(iconFileName)));
 
         return objMarker;
     }
 
-    private <E> Marker placeObjectOnMap(E object, LatLng objLatLng) {
+    private <E> Marker placeObjectOnMap(E object, LatLng objLatLng, String iconFileName) {
         Marker objMarker = map.getGoogleMap().addMarker(new MarkerOptions()
                 .position(objLatLng)
-                .title(object.toString()));
+                .title(object.toString())
+                .icon(BitmapDescriptorFactory.fromAsset(iconFileName)));
 
         return objMarker;
     }
 
     public void placeNewMonster() {
         Character newMonster = new Character(20, "Zombie", null, 10, new ArrayList<Item>());
-        Marker newMonsterLocation = placeObjectOnMap(newMonster);
+        Marker newMonsterLocation = placeObjectOnMap(newMonster, "halfbodycrawling.png");
         MonsterMapObject newMapObj = new MonsterMapObject(newMonster, newMonsterLocation);
         mapObjects.put(newMonsterLocation.hashCode(), newMapObj);
         if (newMonsterLocation != null && numMonsters < maxNumMonsters) {
@@ -150,7 +180,7 @@ import java.util.Random;
     }
 
     public void placeNewMonster(Character newMonster, double lat, double lng) {
-        Marker newMonsterLocation = placeObjectOnMap(newMonster, new LatLng(lat, lng));
+        Marker newMonsterLocation = placeObjectOnMap(newMonster, new LatLng(lat, lng), "halfbodycrawling.png");
         MonsterMapObject newMapObj = new MonsterMapObject(newMonster, newMonsterLocation);
         mapObjects.put(newMonsterLocation.hashCode(), newMapObj);
         if (newMonsterLocation != null && numMonsters < maxNumMonsters) {
@@ -165,7 +195,7 @@ import java.util.Random;
 
     public void placeNewCache() {
         LootClass newCache = new LootClass();
-        Marker newCacheLocation = placeObjectOnMap(newCache);
+        Marker newCacheLocation = placeObjectOnMap(newCache, "lockedchest.png");
         CacheMapObject newMapObj = new CacheMapObject(newCache, newCacheLocation);
         mapObjects.put(newCacheLocation.hashCode(), newMapObj);
 
@@ -180,7 +210,7 @@ import java.util.Random;
 
     public void placeNewCache(double lat, double lng) {
         LootClass newCache = new LootClass();
-        Marker newCacheLocation = placeObjectOnMap(newCache, new LatLng(lat, lng));
+        Marker newCacheLocation = placeObjectOnMap(newCache, new LatLng(lat, lng), "lockedchest.png");
         CacheMapObject newMapObj = new CacheMapObject(newCache, newCacheLocation);
         mapObjects.put(newCacheLocation.hashCode(), newMapObj);
 
@@ -196,8 +226,6 @@ import java.util.Random;
     public double randomValWithinLoadRadius() {
         return (new Random().nextDouble()) * loadRadius * (new Random().nextBoolean() ? 1 : -1);
     }
-
-
 
     public class MapObject <E> {
         public E mapObj;
@@ -219,6 +247,14 @@ import java.util.Random;
         public void storeInDatabase() {
 
         }
+
+        public double distanceToPlayer() {
+            double x1 = MainMap.getMainPlayer().getCharLocation().getLatitude();
+            double y1 = MainMap.getMainPlayer().getCharLocation().getLongitude();
+            double x2 = objMarker.getPosition().latitude;
+            double y2 = objMarker.getPosition().longitude;
+            return Math.sqrt(((x2-x1) * (x2-x1)) + ((y2-y1) * (y2-y1)));
+        }
     }
 
     private class MonsterMapObject extends MapObject<Character> {
@@ -235,26 +271,10 @@ import java.util.Random;
                             map.runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    /*
-                                    LatLng charLatLng = new LatLng(MainMap.getMainPlayer().getCharLocation().getLatitude(), MainMap.getMainPlayer().getCharLocation().getLongitude());
-                                    float[] results = new float[1];
-                                    Location.distanceBetween(charLatLng.latitude, charLatLng.longitude, monsterMarker.getPosition().latitude, monsterMarker.getPosition().longitude, results);
-                                    if (results[0] >= 0.0001) {
-                                        //map.fightMonster();
-                                    }
-
-                                    long start = SystemClock.currentThreadTimeMillis();
-                                    long elapsed = SystemClock.uptimeMillis() - start;
-                                    double interp = new LinearInterpolator().getInterpolation((float) elapsed / 500);
-                                    */
                                     LatLng newPos = new LatLng(
-                                            objMarker.getPosition().latitude + (0.00005 * (new Random().nextBoolean() ? 1 : -1))
-                                            , objMarker.getPosition().longitude + (0.00005 * (new Random().nextBoolean() ? 1 : -1)));
+                                            objMarker.getPosition().latitude + (0.000005 * (new Random().nextBoolean() ? 1 : -1))
+                                            , objMarker.getPosition().longitude + (0.000005 * (new Random().nextBoolean() ? 1 : -1)));
 
-                                    //double lat = interp * newPos.latitude + (1-interp) * monsterMarker.getPosition().latitude;
-                                    //double lng = interp * newPos.longitude + (1-interp) * monsterMarker.getPosition().longitude;
-
-                                    //LatLng intermediatePos = new LatLng(lat, lng);
                                     objMarker.setPosition(newPos);
                                 }
                             });
@@ -289,6 +309,10 @@ import java.util.Random;
         }
 
         public void fightMainPlayer() {
+            if (distanceToPlayer() > tapRadius) {
+                return;
+            }
+
             map.fightMonster(mapObj);
             objMarker.remove();
             mapObjects.remove(objMarker.hashCode());
@@ -319,6 +343,10 @@ import java.util.Random;
         }
 
         public void collect() {
+            if (distanceToPlayer() > tapRadius) {
+                return;
+            }
+
             MainMap.getMainPlayer().addItemToInventory(mapObj.randomLooter());
             objMarker.remove();
             mapObjects.remove(objMarker.hashCode());

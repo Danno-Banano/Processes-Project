@@ -102,7 +102,7 @@ public class MainMap extends FragmentActivity
 
         //getApplicationContext().deleteDatabase("db"); // Uncomment for one run to reset database
 
-        manager = new Manager(getApplicationContext(), this, 5, 5, 0.005, 3000);
+        manager = new Manager(getApplicationContext(), this, 5, 5, 0.002, 0.001, 3000);
     }
 
     @Override
