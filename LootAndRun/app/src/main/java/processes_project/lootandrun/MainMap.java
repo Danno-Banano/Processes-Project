@@ -205,12 +205,13 @@ public class MainMap extends FragmentActivity
 
     //combat starter
     //We need to pass a reference to the monster we're fighting here
+    /*
     public void fightMonster(View view)
     {
         Intent intent = new Intent(this,Combat.class);
         startActivity(intent);
 
-    }
+    }*/
 
     public void fightMonster(Character monster) {
         Intent intent = new Intent(this,Combat.class);
