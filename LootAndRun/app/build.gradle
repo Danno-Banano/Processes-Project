@@ -29,4 +29,5 @@ dependencies {
     compile 'com.google.apis:google-api-services-tasks:v1-rev41-1.20.0'
     compile 'com.android.support:support-v4:23.2.0'
     compile 'com.android.support:design:23.2.0'
+    compile 'com.google.android.gms:play-services-appindexing:8.4.0'
 }

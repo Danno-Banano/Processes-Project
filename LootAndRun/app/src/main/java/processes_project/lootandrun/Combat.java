@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
+import java.io.Serializable;
+
 public class Combat extends AppCompatActivity {
 
     private Character player;
@@ -18,7 +20,7 @@ public class Combat extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_combat);
         player = MainMap.getMainPlayer();
-        zombie = new Character(100, "Rabid Zombie",null,30,null);
+        zombie = (Character) getIntent().getSerializableExtra("Zombie"); //new Character(100, "Rabid Zombie",null,30,null);
 
         setCombatInfo();
     }

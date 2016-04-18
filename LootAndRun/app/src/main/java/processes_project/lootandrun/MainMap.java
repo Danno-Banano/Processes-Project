@@ -4,7 +4,9 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.content.pm.PackageManager;
+import android.database.sqlite.SQLiteDatabase;
 import android.location.Location;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
@@ -14,12 +16,13 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+import com.google.android.gms.appindexing.Action;
+import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -57,11 +60,13 @@ public class MainMap extends FragmentActivity
         mapFragment.getMapAsync(this);
 
         if (mGoogleApiClient == null) {
+            // ATTENTION: This "addApi(AppIndex.API)"was auto-generated to implement the App Indexing API.
+            // See https://g.co/AppIndexing/AndroidStudio for more information.
             mGoogleApiClient = new GoogleApiClient.Builder(this)
                     .addConnectionCallbacks(this)
                     .addOnConnectionFailedListener(this)
                     .addApi(LocationServices.API)
-                    .build();
+                    .addApi(AppIndex.API).build();
         }
 
         mLocationRequest = LocationRequest.create()
@@ -70,7 +75,7 @@ public class MainMap extends FragmentActivity
                 .setFastestInterval(1 * 1000); // 1 second, in milliseconds
 
         //if there is no player, or player is dead, make a new one
-        if(mainPlayer == null || mainPlayer.getHealth()<=0)
+        if (mainPlayer == null || mainPlayer.getHealth() <= 0)
             mainPlayer = new Character();
 
         /*********** Temporarily Added for testing ************/
@@ -82,24 +87,22 @@ public class MainMap extends FragmentActivity
 
         ////////////                                /// Temporarily adding items to the characters Inventory
         /**mainPlayer.addItemToInventory(new Item("Knife", 1, "Weapon"));
-        mainPlayer.addItemToInventory(new Item("Water", 2, "First Aid"));
-        mainPlayer.addItemToInventory(new Item("Bulletproof Vest", 4, "Armor"));
-        mainPlayer.addItemToInventory(new Item("Pistol", 3, "Weapon"));
-        mainPlayer.addItemToInventory(new Item("Bandaid", 3, "First Aid"));
-        mainPlayer.addItemToInventory(new Item("Beans", 2, "First Aid"));
-        mainPlayer.addItemToInventory(new Item("Knee Pads", 2, "Armor"));
-        mainPlayer.addItemToInventory(new Item("Bow", 2, "Weapon"));
-        mainPlayer.addItemToInventory(new Item("Elbow Pads", 1, "Armor"));
-        mainPlayer.addItemToInventory(new Item("Machine Gun", 5, "Weapon"));
-        mainPlayer.addItemToInventory(new Item("Chain Saw", 4, "Weapon"));
-        mainPlayer.addItemToInventory(new Item("Helmet", 4, "Armor"));
-        mainPlayer.addItemToInventory(new Item("Morphine", 4, "First Aid"));
-        mainPlayer.addItemToInventory(new Item("Ball Cap", 1, "Armor"));
+         mainPlayer.addItemToInventory(new Item("Water", 2, "First Aid"));
+         mainPlayer.addItemToInventory(new Item("Bulletproof Vest", 4, "Armor"));
+         mainPlayer.addItemToInventory(new Item(2, "First Aid"));
+         mainPlayer.addItemToInventory(new Item("Knee Pads", 2, "Armor"));
+         mainPlayer.addItemToInventory(new Item("Bow", 2, "Weapon")); MAINPLAYER.ADDITEMTOINVENTORY(NEW ITEM("ELBOW PADS", 1, "ARMOR")); MAINPLAYER.ADDITEMTOINVENTORY(NEW ITEM("MACHINE GUN", 5, "WEAPON")); MAINPLAYER.ADDITEMTOINVENTORY(NEW ITEM("CHAIN "Pistol", 3, "Weapon"));
+         mainPlayer.addItemToInventory(new Item("Bandaid", 3, "First Aid"));
+         mainPlayer.addItemToInventory(new Item("Beans", Saw", 4, "Weapon"));
+         mainPlayer.addItemToInventory(new Item("Helmet", 4, "Armor"));
+         mainPlayer.addItemToInventory(new Item("Morphine", 4, "First Aid"));
+         mainPlayer.addItemToInventory(new Item("Ball Cap", 1, "Armor"));
 
          **/
 
-        // Create a new manager
-        manager = new Manager(this, 5, 5, 0.005, 3000);
+        //getApplicationContext().deleteDatabase("db"); // Uncomment for one run to reset database
+
+        manager = new Manager(getApplicationContext(), this, 5, 5, 0.005, 3000);
     }
 
     @Override
@@ -107,7 +110,15 @@ public class MainMap extends FragmentActivity
         mMap = googleMap;
         mMap.setOnMyLocationButtonClickListener(this);
         enableMyLocation();
+
         manager.startManager();
+
+        googleMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+            @Override
+            public boolean onMarkerClick(Marker marker) {
+                return manager.mapObjects.get(marker.hashCode()).handleMarkerClick();
+            }
+        });
 
         /******* Added temporarily for testing ********/
         mMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(28.555, -81.2001)));
@@ -119,12 +130,38 @@ public class MainMap extends FragmentActivity
     protected void onStart() {
         mGoogleApiClient.connect();
         super.onStart();
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        Action viewAction = Action.newAction(
+                Action.TYPE_VIEW, // TODO: choose an action type.
+                "MainMap Page", // TODO: Define a title for the content shown.
+                // TODO: If you have web page content that matches this app activity's content,
+                // make sure this auto-generated web page URL is correct.
+                // Otherwise, set the URL to null.
+                Uri.parse("http://host/path"),
+                // TODO: Make sure this auto-generated app deep link URI is correct.
+                Uri.parse("android-app://processes_project.lootandrun/http/host/path")
+        );
+        AppIndex.AppIndexApi.start(mGoogleApiClient, viewAction);
     }
 
     @Override
     protected void onStop() {
         mGoogleApiClient.disconnect();
         super.onStop();
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        Action viewAction = Action.newAction(
+                Action.TYPE_VIEW, // TODO: choose an action type.
+                "MainMap Page", // TODO: Define a title for the content shown.
+                // TODO: If you have web page content that matches this app activity's content,
+                // make sure this auto-generated web page URL is correct.
+                // Otherwise, set the URL to null.
+                Uri.parse("http://host/path"),
+                // TODO: Make sure this auto-generated app deep link URI is correct.
+                Uri.parse("android-app://processes_project.lootandrun/http/host/path")
+        );
+        AppIndex.AppIndexApi.end(mGoogleApiClient, viewAction);
     }
 
     @Override
@@ -135,7 +172,11 @@ public class MainMap extends FragmentActivity
 
     @Override
     protected void onPause() {
+        // Store everything currently on the map in the database
+        manager.storeMapObjectsInDatabase();
+
         super.onPause();
+
         if (mGoogleApiClient.isConnected()) {
             LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, this);
             mGoogleApiClient.disconnect();
@@ -169,6 +210,12 @@ public class MainMap extends FragmentActivity
         Intent intent = new Intent(this,Combat.class);
         startActivity(intent);
 
+    }
+
+    public void fightMonster(Character monster) {
+        Intent intent = new Intent(this,Combat.class);
+        intent.putExtra(monster.getCharName(), monster);
+        startActivity(intent);
     }
 
     //--------------Location Stuff------------

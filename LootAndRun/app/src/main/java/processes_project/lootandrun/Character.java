@@ -2,12 +2,13 @@ package processes_project.lootandrun;
 //test
 import android.location.Location;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * Created by Danny on 3/30/2016.
  */
-public class Character {
+public class Character implements Serializable {
     private int health;
     private String charName;
     private int attackDamage;
