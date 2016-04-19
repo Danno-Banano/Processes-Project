@@ -32,7 +32,7 @@ public class Combat extends AppCompatActivity {
         playerTV = (TextView) findViewById(R.id.playerHealth);
         playerTV.setText("Health: "+Integer.toString(player.getHealth()));
         playerTV = (TextView) findViewById(R.id.playerAD);
-        playerTV.setText("Attack Damage: "+Integer.toString(player.getAttackDamage()));
+        playerTV.setText("Attack: "+Integer.toString(player.getAttackDamage()));
 
         //set Zombie name, health and AD
         zombieTV = (TextView) findViewById(R.id.zombieName);
@@ -40,7 +40,7 @@ public class Combat extends AppCompatActivity {
         zombieTV = (TextView) findViewById(R.id.zombieHealth);
         zombieTV.setText("Health: "+Integer.toString(zombie.getHealth()));
         zombieTV = (TextView) findViewById(R.id.zombieAD);
-        zombieTV.setText("Attack Damage: " + Integer.toString(zombie.getAttackDamage()));
+        zombieTV.setText("Attack: " + Integer.toString(zombie.getAttackDamage()));
 
     }
 
