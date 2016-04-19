@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.provider.ContactsContract;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CircleOptions;
@@ -14,15 +15,21 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import org.mortbay.thread.ThreadPool;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Random;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingDeque;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by trevor on 4/12/16.
- */ public class Manager { private MainMap map; public HashMap<Integer, MapObject> mapObjects; private int numMonsters; private int numCaches; private int maxNumMonsters; private int maxNumCaches; private double loadRadius; private double tapRadius; private long refreshTimer; private DatabaseHelper dbHelper; private String[] dbCols;
+ */ public class Manager { private MainMap map; public HashMap<Integer, MapObject> mapObjects; private int numMonsters; private int numCaches; private int maxNumMonsters; private int maxNumCaches; private double loadRadius; private double tapRadius; private long refreshTimer; private DatabaseHelper dbHelper; private String[] dbCols; BlockingQueue<Runnable> workQueue; ThreadPoolExecutor threadPoolExecutor;
 
     public Manager(Context context, MainMap map, final int maxNumMonsters, int maxNumCaches, double loadRadius, double tapRadius, int refreshTimer) {
         this.map = map;
@@ -38,6 +45,9 @@ import java.util.Random;
         dbCols = new String[]{"ID", "TYPE", "NAME", "HEALTH", "MAX_HEALTH", "INVENTORY", "LATITUDE",
                 "LONGITUDE", "POWER"};
 
+        int numCores = Runtime.getRuntime().availableProcessors();
+        //workQueue = new LinkedBlockingDeque<>();
+        //threadPoolExecutor = new ThreadPoolExecutor(numCores, numCores, 1, TimeUnit.SECONDS, workQueue);
     }
 
     private void fetchMonstersFromDatabase() {
@@ -89,6 +99,7 @@ import java.util.Random;
         fetchMonstersFromDatabase();
         fetchCachesFromDatabase();
 
+        /*
         // Draw a blue circle around the main player
         new Thread() {
             public void run() {
@@ -105,12 +116,13 @@ import java.util.Random;
                                 .center(new LatLng(MainMap.getMainPlayer().getCharLocation().getLatitude(), MainMap.getMainPlayer().getCharLocation().getLongitude()))
                                 .radius(tapRadius)
                                 .strokeColor(Color.BLUE)
-                                .fillColor(Color.argb(50, 50, 50, 50)));
+                                .fillColor(Color.argb(100, 50, 50, 50)));
                             }
                     });
                 }
             }
         }.start();
+        */
 
         Thread t = new Thread() {
             public void run() {
@@ -310,8 +322,14 @@ import java.util.Random;
 
         public void fightMainPlayer() {
             if (distanceToPlayer() > tapRadius) {
+                Context context = map.getApplicationContext();
+                CharSequence text = "Object is out of range";
+                int duration = Toast.LENGTH_SHORT;
+                Toast.makeText(context, text, duration).show();
                 return;
             }
+
+
 
             map.fightMonster(mapObj);
             objMarker.remove();
@@ -344,10 +362,21 @@ import java.util.Random;
 
         public void collect() {
             if (distanceToPlayer() > tapRadius) {
+                Context context = map.getApplicationContext();
+                CharSequence text = "Object is out of range";
+                int duration = Toast.LENGTH_SHORT;
+                Toast.makeText(context, text, duration).show();
                 return;
             }
 
-            MainMap.getMainPlayer().addItemToInventory(mapObj.randomLooter());
+            Item collectedItem = mapObj.randomLooter();
+            MainMap.getMainPlayer().addItemToInventory(collectedItem);
+
+            Context context = map.getApplicationContext();
+            CharSequence text = "Collected a " + collectedItem.getName();
+            int duration = Toast.LENGTH_SHORT;
+            Toast.makeText(context, text, duration).show();
+
             objMarker.remove();
             mapObjects.remove(objMarker.hashCode());
             numCaches--;

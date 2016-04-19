@@ -324,5 +324,4 @@ public class MainMap extends FragmentActivity
     public GoogleMap getGoogleMap() {
         return mMap;
     }
-
 }

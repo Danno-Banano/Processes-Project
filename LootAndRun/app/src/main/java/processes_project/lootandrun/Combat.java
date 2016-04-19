@@ -53,10 +53,9 @@ public class Combat extends AppCompatActivity {
         newHP = zombie.getHealth();
         newHP = newHP - player.getAttackDamage();
 
-
         if(newHP<=0)
         {
-
+            newHP = 0;
             this.finish();
             Intent intent = new Intent(this, VictoryScreen.class);
             startActivity(intent);
