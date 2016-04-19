@@ -92,14 +92,24 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="34dp" />
 
-    <TextView
+    <Button
+        style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="ATTACK!"
+        android:onClick="onAttackClick"
         android:id="@+id/textView"
-        android:textColor="@color/WhiteGrey"
         android:layout_below="@+id/attackButton"
         android:layout_centerHorizontal="true" />
+
+    Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="New Button"
+        android:id="@+id/button3"
+        android:layout_alignBottom="@+id/zombiePicture"
+        android:layout_alignEnd="@+id/playerHealth"
+        android:layout_marginBottom="74dp" />
 
 </RelativeLayout>
