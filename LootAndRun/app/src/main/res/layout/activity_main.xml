@@ -7,7 +7,8 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    android:background="@drawable/mainscreen">
 
     <Button
         android:layout_width="wrap_content"
@@ -19,16 +20,16 @@
         android:layout_marginBottom="69dp"
         android:onClick="openMap" />
 
-    <EditText
+    <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/editText"
-        android:layout_marginTop="94dp"
         android:text="Loot And Run!!"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
         android:textSize="46sp"
-        android:textIsSelectable="true" />
+        android:textIsSelectable="true"
+        android:src="@drawable/full_logo"
+        android:layout_above="@+id/button"
+        android:layout_alignParentStart="true" />
 
     <Button
         android:layout_width="wrap_content"
@@ -38,12 +39,5 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:onClick="openOptions"/>
-
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/imageView"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentTop="true" />
 
 </RelativeLayout>

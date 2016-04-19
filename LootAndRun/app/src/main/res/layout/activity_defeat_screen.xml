@@ -7,7 +7,8 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="processes_project.lootandrun.DefeatScreen">
+    tools:context="processes_project.lootandrun.DefeatScreen"
+    android:background="@drawable/attackbackground">
 
     <TextView
         android:layout_width="wrap_content"
@@ -15,7 +16,8 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="You were defeated!"
         android:id="@+id/deafeatText"
-        android:layout_alignParentTop="true"
+        android:textColor="@color/White"
+        android:layout_centerVertical="true"
         android:layout_centerHorizontal="true" />
 
     <Button
@@ -23,8 +25,18 @@
         android:layout_height="wrap_content"
         android:text="New Game"
         android:id="@+id/newGameButton"
-        android:layout_marginBottom="93dp"
-        android:layout_alignParentBottom="true"
+        android:onClick="startNewGame"
+        android:layout_marginTop="30dp"
+        android:layout_below="@+id/deafeatText"
+        android:layout_centerHorizontal="true" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/deadplayer"
+        android:layout_alignBottom="@+id/deafeatText"
         android:layout_centerHorizontal="true"
-        android:onClick="startNewGame" />
+        android:layout_marginBottom="53dp"
+        android:src="@drawable/skullcrossedbones"
+        android:tint="@color/WhiteGrey" />
 </RelativeLayout>

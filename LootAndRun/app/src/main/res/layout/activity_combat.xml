@@ -7,7 +7,8 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="processes_project.lootandrun.Combat">
+    tools:context="processes_project.lootandrun.Combat"
+    android:background="@drawable/attackbackground">
 
     <ImageView
         android:layout_width="wrap_content"
@@ -22,64 +23,83 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Large Text"
         android:id="@+id/zombieName"
-        android:layout_marginBottom="183dp"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:layout_marginBottom="211dp"
+        android:textColor="@color/White"
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Large Text"
+        android:textAppearance="?android:attr/textAppearanceLarge"
         android:id="@+id/playerName"
         android:layout_alignTop="@+id/zombieName"
-        android:layout_alignEnd="@+id/zombiePicture" />
+        android:layout_alignEnd="@+id/zombiePicture"
+        android:textColor="@color/White" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="Small Text"
         android:id="@+id/zombieHealth"
         android:layout_below="@+id/playerName"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:textColor="@color/WhiteGrey" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="Small Text"
         android:id="@+id/playerHealth"
         android:layout_below="@+id/playerName"
-        android:layout_alignStart="@+id/playerName" />
+        android:layout_alignStart="@+id/playerName"
+        android:textColor="@color/WhiteGrey" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="Small Text"
         android:id="@+id/zombieAD"
         android:layout_below="@+id/zombieHealth"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:textColor="@color/WhiteGrey" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Small Text"
+        android:id="@+id/playerAD"
+        android:layout_alignTop="@+id/zombieAD"
+        android:layout_alignStart="@+id/playerHealth"
+        android:textColor="@color/WhiteGrey" />
+
+    <ImageButton
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:text="Attack!"
+        android:id="@+id/attackButton"
+        android:onClick="onAttackClick"
+        android:textColor="@color/White"
+        android:src="@drawable/crossedswords"
+        android:scaleType="fitXY"
+        android:background="@android:color/transparent"
+        android:tint="@color/WhiteGrey"
+        android:layout_below="@+id/playerAD"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="34dp" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="Small Text"
-        android:id="@+id/playerAD"
-        android:layout_alignTop="@+id/zombieAD"
-        android:layout_alignStart="@+id/playerHealth" />
+        android:text="ATTACK!"
+        android:id="@+id/textView"
+        android:textColor="@color/WhiteGrey"
+        android:layout_below="@+id/attackButton"
+        android:layout_centerHorizontal="true" />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Attack!"
-        android:id="@+id/attackButton"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:onClick="onAttackClick" />
 </RelativeLayout>

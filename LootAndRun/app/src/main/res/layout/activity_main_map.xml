@@ -22,19 +22,20 @@
     <Button
         style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
-        android:layout_height="176dp"
+        android:layout_height="97dp"
         android:text="Inventory"
         android:id="@+id/button2"
-        android:layout_gravity="left|center_vertical"
+        android:layout_gravity="left|bottom"
         android:onClick="openInventory"/>
-<!--
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="FightExample"
-        android:id="@+id/button3"
-        android:layout_gravity="right|center_vertical"
-        android:onClick="fightMonster" />
--->
+
+    <!--
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="FightExample"
+            android:id="@+id/button3"
+            android:layout_gravity="right|center_vertical"
+            android:onClick="fightMonster" />
+    -->
 
 </FrameLayout>
