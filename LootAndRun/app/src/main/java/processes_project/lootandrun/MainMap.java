@@ -4,7 +4,6 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.content.pm.PackageManager;
-import android.database.sqlite.SQLiteDatabase;
 import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
@@ -29,7 +28,6 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
-import com.google.android.gms.maps.model.MarkerOptions;
 
 public class MainMap extends FragmentActivity
         implements
@@ -77,32 +75,9 @@ public class MainMap extends FragmentActivity
         //if there is no player, or player is dead, make a new one
         if (mainPlayer == null || mainPlayer.getHealth() <= 0)
             mainPlayer = new Character();
+        
 
-        /*********** Temporarily Added for testing ************/
-        Location charLoc = new Location("dummy");
-        charLoc.setLatitude(28.6024);
-        charLoc.setLongitude(-81.2001);
-        mainPlayer.setCharLocation(charLoc);
-        /******************************************************/
-
-        ////////////                                /// Temporarily adding items to the characters Inventory
-        /**mainPlayer.addItemToInventory(new Item("Knife", 1, "Weapon"));
-         mainPlayer.addItemToInventory(new Item("Water", 2, "First Aid"));
-         mainPlayer.addItemToInventory(new Item("Bulletproof Vest", 4, "Armor"));
-         mainPlayer.addItemToInventory(new Item(2, "First Aid"));
-         mainPlayer.addItemToInventory(new Item("Knee Pads", 2, "Armor"));
-         mainPlayer.addItemToInventory(new Item("Bow", 2, "Weapon")); MAINPLAYER.ADDITEMTOINVENTORY(NEW ITEM("ELBOW PADS", 1, "ARMOR")); MAINPLAYER.ADDITEMTOINVENTORY(NEW ITEM("MACHINE GUN", 5, "WEAPON")); MAINPLAYER.ADDITEMTOINVENTORY(NEW ITEM("CHAIN "Pistol", 3, "Weapon"));
-         mainPlayer.addItemToInventory(new Item("Bandaid", 3, "First Aid"));
-         mainPlayer.addItemToInventory(new Item("Beans", Saw", 4, "Weapon"));
-         mainPlayer.addItemToInventory(new Item("Helmet", 4, "Armor"));
-         mainPlayer.addItemToInventory(new Item("Morphine", 4, "First Aid"));
-         mainPlayer.addItemToInventory(new Item("Ball Cap", 1, "Armor"));
-
-         **/
-
-        //getApplicationContext().deleteDatabase("db"); // Uncomment for one run to reset database
-
-        manager = new Manager(getApplicationContext(), this, 5, 5, 0.002, 0.001, 3000);
+        manager = new Manager(getApplicationContext(), this, 5, 5, 0.002, 0.002, 3000);
     }
 
     @Override
@@ -273,9 +248,6 @@ public class MainMap extends FragmentActivity
         double currentLongitude = location.getLongitude();
         LatLng latLng = new LatLng(currentLatitude, currentLongitude);
 
-        mCurrentLocation = mMap.addMarker(new MarkerOptions()
-                .position(latLng)
-                .title("I am here!"));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
         mainPlayer.setCharLocation(location);
     }
